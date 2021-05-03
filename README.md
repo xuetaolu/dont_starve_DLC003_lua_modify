@@ -6,7 +6,7 @@
 
 # 说明
 饥荒 DLC003 哈姆雷特lua代码魔改，可以玩巨人国/海难，需勾选兼容哈姆雷特，启用DLC003的代码
-
+`
 -- file: dont_starve\data\DLC0003\scripts\stategraphs\SGwilson.lua
 
 global("__xue__")
@@ -37,3 +37,4 @@ __xue__.ENEMY_MULTI_ATTACK_SPEED = 3
 
 -- 其他
 -- 敌人可以移动攻击，边走边打你
+`
