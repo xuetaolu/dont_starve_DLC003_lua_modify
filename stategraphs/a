@@ -1,0 +1,5 @@
+for i,v in pairs(Ents) do
+	if v.prefab == "antman" then
+		print(v, v.components.homeseeker)
+	end
+end

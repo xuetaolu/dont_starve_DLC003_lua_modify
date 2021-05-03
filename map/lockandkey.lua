@@ -1,0 +1,507 @@
+-- List of locks
+LOCKS_ARRAY = 
+{
+	"NONE",
+	"PIGGIFTS",
+	"TREES",
+	"SPIDERDENS",		
+	"ROCKS",
+	"FARM",
+	"MEAT",
+	"BEEHIVE",
+	"KILLERBEES",
+	"PIGKING",
+	"MONSTERS_DEFEATED",
+	"HARD_MONSTERS_DEFEATED",
+	"SPIDERS_DEFEATED",
+	"BASIC_COMBAT",
+	"ADVANCED_COMBAT",
+	"ONLYTIER1",
+	"TIER1",
+	"TIER2",
+	"TIER3",
+	"TIER4",
+	"TIER5",
+	"LIGHT",
+	"FUNGUS",
+	"CAVE",
+	"LABYRINTH",
+	"WILDS",
+	"RUINS",
+	"SACRED",
+	"BADLANDS",
+	"HOUNDS",
+	--"ADVANCED_COMBAT",
+	"ISLAND1",
+	"ISLAND2",
+	"ISLAND3",
+	"ISLAND4",
+	"ISLAND5",
+	"ISLAND6",
+	"ISLAND7",
+
+
+	--PORKLAND
+	"JUNGLE_DEPTH_1",
+	"JUNGLE_DEPTH_2",
+	"JUNGLE_DEPTH_3",
+	"CIVILIZATION_1",
+	"CIVILIZATION_2",
+	"RUINS_ENTRANCE_1",	
+	"RUINS_EXIT_1",		
+
+	"OTHER_CIVILIZATION_1",
+	"OTHER_CIVILIZATION_2",	
+	"OTHER_JUNGLE_DEPTH_1",
+	"OTHER_JUNGLE_DEPTH_2",
+
+	"LOST_JUNGLE_DEPTH_1",
+	"LOST_JUNGLE_DEPTH_2",
+
+	"WILD_JUNGLE_DEPTH_1",
+	"WILD_JUNGLE_DEPTH_2",	
+	"WILD_JUNGLE_DEPTH_3",		
+
+	"PINACLE",
+
+	"IMPASS",
+
+	"ISLAND_1",
+	"ISLAND_2",
+	"ISLAND_3",
+	"ISLAND_4",
+	"ISLAND_5",	
+
+	"INTERIOR",
+
+	"LAND_DIVIDE_1",
+	"LAND_DIVIDE_2",
+	"LAND_DIVIDE_3",
+	"LAND_DIVIDE_4",	
+	"LAND_DIVIDE_5",		
+}
+LOCKS = {}
+for i,v in ipairs(LOCKS_ARRAY) do
+	assert(LOCKS[v] == nil, "Lock "..v.." is defined twice!")
+	LOCKS[v] = i
+end
+
+-- List of keys
+KEYS_ARRAY = 
+{
+	"NONE",
+	"PICKAXE",
+	"AXE",
+	"GRASS",
+	"STONE",
+	"WOOD",
+	"MEAT",
+	"PIGS",		
+	"FIRE",		
+	"POOP",
+	"WOOL",
+	"FARM",
+	"HONEY",
+	"GOLD",
+	"BEEHAT",
+	"TRINKETS",
+	"HARD_WALRUS",
+	"HARD_SPIDERS",
+	"HARD_HOUNDS",
+	"HARD_MERMS",
+	"HARD_TENTACLES",
+	"WALRUS",
+	"SPIDERS",
+	"HOUNDS",
+	"MERMS",
+	"GEARS",
+	"CHESSMEN",
+	"TENTACLES",
+	"TIER1",
+	"TIER2",
+	"TIER3",
+	"TIER4",
+	"TIER5",
+	"TIER6",
+	"LIGHT",
+	"FUNGUS",
+	"CAVE",
+	"LABYRINTH",
+	"WILDS",
+	"RUINS",
+	"SACRED",
+	"BADLANDS",
+	"ISLAND1",
+	"ISLAND2",
+	"ISLAND3",
+	"ISLAND4",
+	"ISLAND5",
+	"ISLAND6",
+	"ISLAND7",
+	
+	--PORKLAND	
+	"JUNGLE_DEPTH_1",	
+	"JUNGLE_DEPTH_2",
+	"JUNGLE_DEPTH_3",
+	"CIVILIZATION_1",
+	"CIVILIZATION_2",
+	"RUINS_ENTRANCE_1",	
+	"RUINS_EXIT_1",
+
+	"OTHER_CIVILIZATION_1",
+	"OTHER_CIVILIZATION_2",
+	"OTHER_JUNGLE_DEPTH_1",
+	"OTHER_JUNGLE_DEPTH_2",			
+
+	"LOST_JUNGLE_DEPTH_1",
+	"LOST_JUNGLE_DEPTH_2",	
+
+	"WILD_JUNGLE_DEPTH_1",
+	"WILD_JUNGLE_DEPTH_2",	
+	"WILD_JUNGLE_DEPTH_3",		
+
+	"PINACLE",
+
+	"IMPASS",	
+
+	"ISLAND_1",
+	"ISLAND_2",
+	"ISLAND_3",
+	"ISLAND_4",	
+	"ISLAND_5",	
+
+	"INTERIOR",	
+
+	"LAND_DIVIDE_1",
+	"LAND_DIVIDE_2",
+	"LAND_DIVIDE_3",	
+	"LAND_DIVIDE_4",		
+	"LAND_DIVIDE_5",		
+}
+KEYS = {}
+for i,v in ipairs(KEYS_ARRAY) do
+	assert(KEYS[v] == nil, "Key "..v.." is defined twice!")
+	KEYS[v] = i
+end
+
+-- Locks are unlocked if ANY key is provided.
+-- However, ALL locks must be opened for a task to be unlocked.
+LOCKS_KEYS = 
+{
+	[LOCKS.NONE] =
+	{},
+	[LOCKS.HARD_MONSTERS_DEFEATED] = 
+	{
+		KEYS.HARD_WALRUS,
+		KEYS.HARD_SPIDERS,
+		KEYS.HARD_HOUNDS,
+		KEYS.HARD_MERMS,
+		KEYS.HARD_TENTACLES,
+		KEYS.CHESSMEN,
+	},
+	[LOCKS.MONSTERS_DEFEATED] = 
+	{
+		KEYS.WALRUS,
+		KEYS.SPIDERS,
+		KEYS.HOUNDS,
+		KEYS.MERMS,
+		KEYS.TENTACLES,
+		KEYS.CHESSMEN,
+	},
+	[LOCKS.SPIDERS_DEFEATED] = 
+	{
+		KEYS.SPIDERS,
+	},
+	[LOCKS.BASIC_COMBAT] =
+	{
+		KEYS.AXE,
+		KEYS.PIGS,
+	},
+	[LOCKS.ADVANCED_COMBAT] =
+	{
+		KEYS.GOLD,
+		KEYS.HONEY,
+	},
+    [LOCKS.ROCKS] = 
+    {
+    	KEYS.PICKAXE
+    },
+    [LOCKS.PIGGIFTS] = 
+    {
+    	KEYS.MEAT,
+    	KEYS.AXE,
+    	KEYS.PICKAXE,
+    },
+    [LOCKS.TREES] = 
+    {
+    	KEYS.AXE,
+    	KEYS.FIRE,
+    },
+    [LOCKS.SPIDERDENS] = 
+    {
+    	KEYS.PIGS,
+    	KEYS.FIRE,
+    	KEYS.AXE,
+    	KEYS.PICKAXE,
+    	KEYS.HONEY,
+    },
+    [LOCKS.BEEHIVE] = 
+    {
+    	KEYS.AXE,
+    },
+    [LOCKS.FARM] = 
+    {
+    	KEYS.POOP,
+    },
+    [LOCKS.MEAT] = 
+    {
+    	KEYS.SPIDERS,
+    	KEYS.PIGS,
+    	KEYS.FARM,
+    },
+	[LOCKS.KILLERBEES] = 
+	{
+		KEYS.BEEHAT,
+	},
+	[LOCKS.PIGKING] =
+	{
+		KEYS.TRINKETS,
+	},
+	[LOCKS.TREES] =
+	{
+		KEYS.AXE,
+		KEYS.PIGS,
+	},
+	[LOCKS.ONLYTIER1] = 
+	{
+		KEYS.TIER1,
+	},
+	[LOCKS.TIER1] = 
+	{
+		KEYS.TIER1,
+		KEYS.TIER2,
+	},
+	[LOCKS.TIER2] = 
+	{
+		KEYS.TIER2,
+		KEYS.TIER3,
+	},
+	[LOCKS.TIER3] = 
+	{
+		KEYS.TIER3,
+		KEYS.TIER4,
+	},
+	[LOCKS.TIER4] = 
+	{
+		KEYS.TIER4,
+		KEYS.TIER5,
+	},
+	[LOCKS.TIER5] = 
+	{
+		KEYS.TIER5,
+		KEYS.TIER6,
+	},
+	
+	[LOCKS.LIGHT] = 
+	{
+		KEYS.LIGHT,
+	},
+	[LOCKS.CAVE] = 
+	{
+		KEYS.CAVE,
+	},
+	[LOCKS.FUNGUS] = 
+	{
+		KEYS.FUNGUS,
+	},
+	[LOCKS.LABYRINTH] = 
+	{
+		KEYS.LABYRINTH,
+	},
+	[LOCKS.WILDS] =
+	{
+		KEYS.WILDS,
+	},
+	[LOCKS.RUINS] =
+	{
+		KEYS.RUINS
+	},
+	[LOCKS.SACRED] =
+	{
+		KEYS.SACRED
+	},
+	[LOCKS.ISLAND1] =
+	{
+		KEYS.ISLAND1
+	},
+	[LOCKS.ISLAND2] =
+	{
+		KEYS.ISLAND2
+	},
+	[LOCKS.ISLAND3] =
+	{
+		KEYS.ISLAND3
+	},
+	[LOCKS.ISLAND4] =
+	{
+		KEYS.ISLAND4
+	},
+	[LOCKS.ISLAND5] =
+	{
+		KEYS.ISLAND5
+	},
+	[LOCKS.ISLAND6] =
+	{
+		KEYS.ISLAND6
+	},
+	[LOCKS.ISLAND7] =
+	{
+		KEYS.ISLAND7
+	},
+
+	--PORKLAND
+	[LOCKS.JUNGLE_DEPTH_1] = 
+	{
+		KEYS.JUNGLE_DEPTH_1,
+	},
+	[LOCKS.JUNGLE_DEPTH_2] = 
+	{
+		KEYS.JUNGLE_DEPTH_2,
+	},
+	[LOCKS.JUNGLE_DEPTH_3] = 
+	{
+		KEYS.JUNGLE_DEPTH_3,
+	},	
+	[LOCKS.CIVILIZATION_1] = 
+	{
+		KEYS.CIVILIZATION_1,
+	},
+	[LOCKS.CIVILIZATION_2] = 
+	{
+		KEYS.CIVILIZATION_2,
+	},	
+	[LOCKS.OTHER_CIVILIZATION_1] = 
+	{
+		KEYS.OTHER_CIVILIZATION_1,
+	},
+	[LOCKS.OTHER_CIVILIZATION_2] = 
+	{
+		KEYS.OTHER_CIVILIZATION_2,
+	},		
+	[LOCKS.OTHER_JUNGLE_DEPTH_1] = 
+	{
+		KEYS.OTHER_JUNGLE_DEPTH_1,
+	},
+	[LOCKS.OTHER_JUNGLE_DEPTH_2] = 
+	{
+		KEYS.OTHER_JUNGLE_DEPTH_2,
+	},	
+	[LOCKS.LOST_JUNGLE_DEPTH_1] = 
+	{
+		KEYS.LOST_JUNGLE_DEPTH_1,
+	},	
+	[LOCKS.LOST_JUNGLE_DEPTH_2] = 
+	{
+		KEYS.LOST_JUNGLE_DEPTH_2,
+	},	
+	[LOCKS.WILD_JUNGLE_DEPTH_1] = 
+	{
+		KEYS.WILD_JUNGLE_DEPTH_1,
+	},	
+	[LOCKS.WILD_JUNGLE_DEPTH_2] = 
+	{
+		KEYS.WILD_JUNGLE_DEPTH_2,
+	},		
+	[LOCKS.WILD_JUNGLE_DEPTH_3] = 
+	{
+		KEYS.WILD_JUNGLE_DEPTH_3,
+	},	
+
+	[LOCKS.RUINS_ENTRANCE_1] = 
+	{
+		KEYS.RUINS_ENTRANCE_1,
+	},	
+	[LOCKS.RUINS_EXIT_1] = 
+	{
+		KEYS.RUINS_EXIT_1,
+	},
+
+	[LOCKS.IMPASS] = 
+	{
+		KEYS.IMPASS,
+	},
+
+	[LOCKS.ISLAND_1] = 
+	{
+		KEYS.ISLAND_1,
+	},
+	[LOCKS.ISLAND_2] = 
+	{
+		KEYS.ISLAND_2,
+	},
+	[LOCKS.ISLAND_3] = 
+	{
+		KEYS.ISLAND_3,
+	},				
+	[LOCKS.ISLAND_4] = 
+	{
+		KEYS.ISLAND_4,
+	},				
+	[LOCKS.ISLAND_5] = 
+	{
+		KEYS.ISLAND_5,
+	},				
+
+
+	[LOCKS.INTERIOR] = 
+	{
+		KEYS.INTERIOR,
+	},
+
+	[LOCKS.LAND_DIVIDE_1] = 
+	{
+		KEYS.LAND_DIVIDE_1,
+	},
+	[LOCKS.LAND_DIVIDE_2] = 
+	{
+		KEYS.LAND_DIVIDE_2,
+	},
+	[LOCKS.LAND_DIVIDE_3] = 
+	{
+		KEYS.LAND_DIVIDE_3,
+	},
+	[LOCKS.LAND_DIVIDE_4] = 
+	{
+		KEYS.LAND_DIVIDE_4,
+	},	
+	[LOCKS.LAND_DIVIDE_5] = 
+	{
+		KEYS.LAND_DIVIDE_5,
+	},			
+	
+	[LOCKS.PINACLE] = 
+	{
+		KEYS.PINACLE,
+	},			
+}
+
+
+for lock,keyset in pairs(LOCKS_KEYS) do
+	assert(lock ~= nil and lock == LOCKS[LOCKS_ARRAY[lock]], "A lock in the lock_keys is misnamed!")
+	local count = 0
+	for i,key in pairs(keyset) do
+		assert(key ~= nil and key == KEYS[KEYS_ARRAY[key]], "A key in lock "..LOCKS_ARRAY[lock].." is misnamed!")
+		count = count + 1
+	end
+	assert(#keyset == count, "There appears to be an incorrectly named key in locks_keys: "..LOCKS_ARRAY[lock])
+	-- NOTE: This wil **NOT** catch it if the typo is in the last key in the list. ... But it's better than nothing...
+end
+
+--[[
+print("LOCKS")
+dumptable(LOCKS,1)
+print("KEYS")
+dumptable(KEYS,1)
+print("LOCKS_KEYS")
+dumptable(LOCKS_KEYS,1,1)
+]]

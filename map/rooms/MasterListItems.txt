@@ -1,0 +1,55 @@
+
+										
+beehive=0.003,
+berrybush=0.005,
+blue_mushroom = .025,
+	beehive=0.003,
+carrot_planted=0.05,
+evergreen=1.5,
+evergreen_sparse=1.5,
+flower=0.05,
+flower_evil=2,
+fireflies=0.1,
+flint=0.05,
+grass=0.0025,
+gravestone=0.01,
+green_mushroom = .025,
+houndbone=0.5,
+houndmound=0.08, 
+mandrake
+marsh_bush=1,
+marsh_tree=0.3,
+mermhouse=0.004,
+molehill=2,
+pighouse=0.015,
+pond=.001,
+pond_mos
+rabbithole=0.025,
+red_mushroom = .025,
+reeds=0.005,
+rocks=0.1,
+rock1=0.008,
+rock2=0.008,
+sapling=0.15,
+spiderden=0.04,
+smallmammal = {weight = 0.02, prefabs = {"rabbithole", "molehill"}},								
+tallbirdnest=0.008,
+tentacle=0.095,									
+tree = {weight = 0.3, prefabs = {"evergreen", "deciduoustree"}},										
+wasphive=0.5,	
+
+NOTES ON SCRIPTING ROOMS
+
+1) distributepercent = .15, -- This is the chance that a prefab will be placed on any given tile in this room. If the answer fr any given tile is "yes" then it will choose a prefab from the list below , for example:
+
+distributeprefabs=
+{
+rocks = 0.1,
+flint = 0.02,
+rock1 = 0.05,
+rock2 = 0.05,
+rock_flintless = 0.05,
+grass = .05,
+		
+
+		                 									
