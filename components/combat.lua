@@ -539,7 +539,53 @@ function Combat:GetAttacked(attacker, damage, weapon, stimuli)
 			FightStat_AttackedBy(attacker,damage,init_damage-damage)
 		end
 		if damage > 0 and self.inst.components.health:IsInvincible() == false then
+
+			-- combat.lua 位于 function Combat:GetAttacked(attacker, damage, weapon, stimuli)
+			-- 在 self.inst.components.health:DoDelta(-damage, nil, attacker and attacker.prefab or "NIL") 
+			-- 之前添加
+			if (self.inst.prefab == "wheeler") and (self.inst == GetPlayer()) then
+				
+				local inst = self.inst
+				if not (inst.sg.currentstate and inst.sg.currentstate.name == "dodge") then
+					if (GetTime() - inst.last_dodge_time > TUNING.WHEELER_DODGE_COOLDOWN) and 
+					not inst.components.driver:GetIsDriving() and not inst.components.rider:IsRiding() then
+						
+						inst.sg:RemoveStateTag("busy")
+						local worldPosition = nil
+						local dir = inst.components.playercontroller:GetWorldControllerVector()
+
+						if dir then
+							local multi = 20
+							dir.x = dir.x * multi
+							dir.z = dir.z * multi
+							worldPosition = Vector3(inst.Transform:GetWorldPosition()) + dir
+						else
+							-- 按人物朝向
+							local angle = inst.Transform:GetRotation()*DEGREES
+							local offset = Vector3(math.cos( angle ), 0, -math.sin( angle ))
+							worldPosition = Vector3(inst.Transform:GetWorldPosition()) + offset
+							-- 按鼠标方向
+							-- worldPosition = TheInput:GetWorldPosition()
+						end
+
+						local bufferAction = BufferedAction(inst, nil, ACTIONS.DODGE, nil, worldPosition)
+						
+						bufferAction:AddSuccessAction(function() 
+								inst.sg:AddStateTag("not_hit_stunned")
+							end)
+
+						inst.components.locomotor:GoToPoint( 
+							worldPosition, 
+							bufferAction, 
+							true )
+						inst.sg:GoToState("dodge")
+						blocked = true
+					end
+				end
+			end
+
 			self.inst.components.health:DoDelta(-damage, nil, attacker and attacker.prefab or "NIL")
+
 			if self.inst.components.health:GetPercent() <= 0 then
 				if attacker then
 					attacker:PushEvent("killed", {victim = self.inst})

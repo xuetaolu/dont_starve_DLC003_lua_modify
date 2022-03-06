@@ -17,10 +17,10 @@ __xue__.AUTO_CANCEL = true
 __xue__.FAST_CHOP = true
 
 -- 默认玩家加速攻击 8 帧，秒打
-__xue__.FAST_ATTACK_TIME = 8*FRAMES+0.01
+__xue__.FAST_ATTACK_TIME = 0.2 -- 8*FRAMES+0.01
 
 -- 默认玩家攻击有击退，为 1，大约打退1.5格草叉距离
-__xue__.KNOCK_BACK_MULTI = 1
+__xue__.KNOCK_BACK_MULTI = 0.0
 
 -- 默认玩家被打硬直时间缩短 3 帧，原本就是 3 帧，即没有硬直
 __xue__.ANTI_HIT_TIME = 3*FRAMES
@@ -4033,49 +4033,51 @@ local states=
                         global("__xue__")
                         __xue__ = __xue__ or {}
                         __xue__.KNOCK_BACK_MULTI = __xue__.KNOCK_BACK_MULTI or 1
-                        local multi = __xue__.KNOCK_BACK_MULTI or 1
-                        local targ_locomotor = targ.components.locomotor
-                        if targ_locomotor then 
-                            dir.x = dir.x * multi
-                            dir.z = dir.z * multi
-                            -- DoTaskInTime(2*FRAMES, function()
-                            local kb_fn = function()
-                                if targ and targ:IsValid() and not targ:IsInLimbo() then
-                                    local x,y,z = targ.Transform:GetWorldPosition()
-                                    -- y = y-0.0001
-                                    local pos3 = dir + Vector3(x,y,z)
+                        if __xue__.KNOCK_BACK_MULTI > 0 then
+                            local multi = __xue__.KNOCK_BACK_MULTI or 1
+                            local targ_locomotor = targ.components.locomotor
+                            if targ_locomotor then 
+                                dir.x = dir.x * multi
+                                dir.z = dir.z * multi
+                                -- DoTaskInTime(2*FRAMES, function()
+                                local kb_fn = function()
+                                    if targ and targ:IsValid() and not targ:IsInLimbo() then
+                                        local x,y,z = targ.Transform:GetWorldPosition()
+                                        -- y = y-0.0001
+                                        local pos3 = dir + Vector3(x,y,z)
 
-                                    
-                                    
-                                    local radius = targ.Physics:GetRadius()
+                                        
+                                        
+                                        local radius = targ.Physics:GetRadius()
 
-                                    -- local pos4 = pos3 + Vector3(  )
+                                        -- local pos4 = pos3 + Vector3(  )
 
-                                    dir = dir * down
-                                    damage = damage * down
-                                    targ.Physics:Teleport(pos3.x,pos3.y,pos3.z)
+                                        dir = dir * down
+                                        damage = damage * down
+                                        targ.Physics:Teleport(pos3.x,pos3.y,pos3.z)
 
-                                    local ents = TheSim:FindEntities(pos3.x,pos3.y,pos3.z, radius + 10, nil, nil, nil)
-                                    for k,entity in pairs(ents) do
+                                        local ents = TheSim:FindEntities(pos3.x,pos3.y,pos3.z, radius + 10, nil, nil, nil)
+                                        for k,entity in pairs(ents) do
 
-                                        if entity~=targ and entity:IsValid() and not entity:IsInLimbo() and entity.components.health and entity.components.combat then
-                                            local length = radius + entity.Physics:GetRadius() + 0.01
-                                            if entity:GetHorzDistanceSqToInst( targ ) < length * length then
-                                                entity.components.combat:GetAttacked(inst, damage, nil, nil)
+                                            if entity~=targ and entity:IsValid() and not entity:IsInLimbo() and entity.components.health and entity.components.combat then
+                                                local length = radius + entity.Physics:GetRadius() + 0.01
+                                                if entity:GetHorzDistanceSqToInst( targ ) < length * length then
+                                                    entity.components.combat:GetAttacked(inst, damage, nil, nil)
+                                                end
                                             end
                                         end
+
+
+
                                     end
-
-
-
                                 end
+                                kb_fn()
+                                for i=1,15 do
+                                    targ:DoTaskInTime(i*FRAMES,kb_fn)
+                                end
+                                
+                                
                             end
-                            kb_fn()
-                            for i=1,15 do
-                                targ:DoTaskInTime(i*FRAMES,kb_fn)
-                            end
-                            
-                            
                         end
                     end
                 end
@@ -4690,7 +4692,7 @@ local states=
     
     State{
         name = "hit",
-        tags = {"busy"},
+        tags = {},
         
         onenter = function(inst)
             inst.SoundEmitter:PlaySound("dontstarve/wilson/hit")        
