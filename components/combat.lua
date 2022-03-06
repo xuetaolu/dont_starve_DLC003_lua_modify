@@ -546,11 +546,10 @@ function Combat:GetAttacked(attacker, damage, weapon, stimuli)
 			if (self.inst.prefab == "wheeler") and (self.inst == GetPlayer()) then
 				
 				local inst = self.inst
-				-- if not (inst.sg.currentstate and inst.sg.currentstate.name == "dodge") then
+				if not (inst.sg.currentstate and inst.sg.currentstate.name == "dodge") then
 					if (GetTime() - inst.last_dodge_time > TUNING.WHEELER_DODGE_COOLDOWN) and 
 					not inst.components.driver:GetIsDriving() and not inst.components.rider:IsRiding() then
-						
-						inst.sg:RemoveStateTag("busy")
+
 						local worldPosition = nil
 						local dir = inst.components.playercontroller:GetWorldControllerVector()
 
@@ -572,6 +571,7 @@ function Combat:GetAttacked(attacker, damage, weapon, stimuli)
 						
 						bufferAction:AddSuccessAction(function() 
 								inst.sg:AddStateTag("not_hit_stunned")
+								inst.sg:AddStateTag("busy")
 							end)
 
 						inst.components.locomotor:GoToPoint( 
@@ -579,6 +579,8 @@ function Combat:GetAttacked(attacker, damage, weapon, stimuli)
 							bufferAction, 
 							true )
 						inst.sg:GoToState("dodge")
+						inst.sg:AddStateTag("not_hit_stunned")
+						inst.sg:AddStateTag("busy")
 						blocked = true
 					end
 				-- end
