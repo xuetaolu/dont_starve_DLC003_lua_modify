@@ -17,10 +17,10 @@ __xue__.AUTO_CANCEL = true
 __xue__.FAST_CHOP = true
 
 -- 默认玩家加速攻击 8 帧，秒打
-__xue__.FAST_ATTACK_TIME = 0.2 -- 8*FRAMES+0.01
+__xue__.FAST_ATTACK_TIME = 8.0 -- 8*FRAMES+0.01
 
 -- 默认玩家攻击有击退，为 1，大约打退1.5格草叉距离
-__xue__.KNOCK_BACK_MULTI = 0.0
+__xue__.KNOCK_BACK_MULTI = 0.2
 
 -- 默认玩家被打硬直时间缩短 3 帧，原本就是 3 帧，即没有硬直
 __xue__.ANTI_HIT_TIME = 3*FRAMES
