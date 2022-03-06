@@ -546,7 +546,7 @@ function Combat:GetAttacked(attacker, damage, weapon, stimuli)
 			if (self.inst.prefab == "wheeler") and (self.inst == GetPlayer()) then
 				
 				local inst = self.inst
-				if not (inst.sg.currentstate and inst.sg.currentstate.name == "dodge") then
+				-- if not (inst.sg.currentstate and inst.sg.currentstate.name == "dodge") then
 					if (GetTime() - inst.last_dodge_time > TUNING.WHEELER_DODGE_COOLDOWN) and 
 					not inst.components.driver:GetIsDriving() and not inst.components.rider:IsRiding() then
 						
@@ -581,7 +581,7 @@ function Combat:GetAttacked(attacker, damage, weapon, stimuli)
 						inst.sg:GoToState("dodge")
 						blocked = true
 					end
-				end
+				-- end
 			end
 
 			self.inst.components.health:DoDelta(-damage, nil, attacker and attacker.prefab or "NIL")
